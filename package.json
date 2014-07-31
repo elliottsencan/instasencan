@@ -1,0 +1,29 @@
+{
+  "name": "Instatest",
+  "description": "Fix the bugs, refactor the code, write some tests",
+  "version": "0.0.1",
+  "author": "ServiceNow",
+  "main": "public/index.html",
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "devDependencies": {
+    "express": "~3.4.7",
+    "gulp": "^3.8.6",
+    "gulp-concat": "2.3.4",
+    "gulp-debug": "^0.3.0",
+    "gulp-notify": "1.4.0",
+    "gulp-rename": "~0.2.1",
+    "gulp-uglify": "~0.1.0",
+    "gulp-util": "~2.2.9",
+    "karma": "*",
+    "karma-chrome-launcher": "*",
+    "karma-firefox-launcher": "*",
+    "karma-jasmine": "*",
+    "karma-safari-launcher": "*"
+  },
+  "scripts": {
+    "build": "gulp",
+    "start": "gulp server"
+  }
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="instatest">
+<head>
+	<meta charset="utf-8" />
+	<title>Instatest</title>
+	<link rel="stylesheet" href="css/main.css" />
+	<script src="js/angular-all.min.js"></script>
+	<script src="js/app.min.js"></script>
+</head>
+<body ng-controller="slideshow" ng-class="loadingClass">
+	<div id="header">
+		<img src="img/instagram-logo.png" /> 
+		#<input type="text" ng-model="tag" ng-change="tc()" ng-init="tag='servicenow'" size="{{ tag.length }}" />
+	</div>
+
+	<ul id="slides">
+		<li ng-repeat="image in images" class="slide" ng-class="{ active : image.isActive }">
+			<figure>
+				<img ng-src="{{ image.images.standard_resolution.url }}" width="{{ image.images.standard_resolution.width }}" height="{{ image.images.standard_resolution.height }}" class="image" />
+			</figure>
+
+			<div class="meta">
+				<img class="qr" ng-src="http://datamatrix.kaywa.com/img.php?s=8&d={{ image.link }}" />
+				<p class="caption">
+					<cite class="author">
+						<img ng-src="{{ image.user.profile_picture }}" width="40" height="40" /> 
+						{{ image.user.username }}
+					</cite> 
+					{{ image.caption.text }}
+				</p>
+				<p class="likes">
+					&hearts; {{ image.likes.count }} likes
+				</p>
+				<ul class="comments">
+					<li class="comment" ng-repeat="comment in image.comments.data">
+						<cite class="author">
+							<img ng-src="{{ comment.from.profile_picture }}" width="40" height="40" /> 
+							{{ comment.from.username }}
+						</cite> 
+						{{ comment.text }}
+					</li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>
