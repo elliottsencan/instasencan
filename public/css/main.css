@@ -1,8 +1,11 @@
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}body{margin:0;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;margin:0.67em 0;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:bold;}dfn{font-style:italic;}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em;}pre{white-space:pre-wrap;}q{quotes:"\201C" "\201D" "\2018" "\2019";}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-0.5em;}sub{bottom:-0.25em;}img{border:0;}svg:not(:root){overflow:hidden;}figure{margin:0;}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:0.35em 0.625em 0.75em;}legend{border:0;padding:0;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,select{text-transform:none;}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;}button[disabled],html input[disabled]{cursor:default;}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}
+
 body { 
 	margin:0 auto; 
 	padding:0; 
 	height:100%; 
 	width:100%; 
+	background: #2D5D8A
 }
 ul, li { 
 	margin:0; 
@@ -47,60 +50,215 @@ div#header input {
 	opacity:0.5; 
 	-webkit-transition: all 0.5s; 
 }
-#slides { 
-	width:100%; 
-	position:absolute; 
-	top:80px; 
-	bottom:0; 
-	overflow:hidden; 
-	-webkit-transition: all 0.5s; 
+
+
+/** slider **/
+
+.arrows{
+	position: absolute;
+	top: 50%;
+	width:100%;
 }
-.slide { 
-	top:0; 
-	position:absolute; 
-	opacity:0; 
-	-webkit-transform: translate3d(0, 100%, 0);
-	-webkit-transition: all 1.5s; 
+
+.arrows .next{
+	right:-50px;
 }
-.slide.active { 
-	top:0; 
-	opacity:1; 
-	-webkit-transform: translate3d(0,0,0); 
+
+.arrows .prev{
+	left:-50px;
 }
-.slide figure { 
-	margin: 20px;
-	width: 800px;
+
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.slider{
+	width:640px;
+	height:640px;
+}
+
+.slide img{
+	opacity:0;
+	width:640px;
+	height:640px;
+	transition: opacity 750ms ease;
+	-webkit-transition: opacity 750ms ease;
+	-moz-transition: opacity 750ms ease;
+	-o-transition: opacity 750ms ease;
+	-ms-transition: opacity 750ms ease;
+	position:absolute;
+	top:0;
+	left:0;
+	box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+.slide img.visible{
+	opacity:1;
+}
+
+
+/*--------------------*/
+/* Multi thumb */
+/*--------------------*/
+.color-9 { background-color: #e65b61; }
+
+.arrows a {
+	width: 60px;
+	height: 100px;
+}
+
+.arrows .icon-wrap {
+	position: absolute;
+	top: 50%;
+	display: block;
+	width: 32px;
+	height: 32px;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.arrows a.next .icon-wrap {
+	right: 0;
+}
+
+.arrows .icon-wrap::after {
+	position: absolute;
+	top: 50%;
+	width: 20px;
+	height: 1px;
+	background: #fff;
+	content: '';
+	-webkit-transition: width 0.3s 0.2s;
+	transition: width 0.3s 0.2s;
+	-webkit-backface-visibility: hidden; /* needed because of Chrome bug with prefixed calc */
+	backface-visibility: hidden;
+}
+
+.arrows a.prev .icon-wrap::after {
+	left: -webkit-calc(100% - 10px);
+	left: calc(100% - 10px);
+}
+
+.arrows a.next .icon-wrap::after {
+	right: -webkit-calc(100% - 10px);
+	right: calc(100% - 10px);
+}
+
+.arrows svg.icon {
+	fill: #fff;
+}
+
+.arrows div {
+	position: absolute;
+	top: -25%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: end;
+	width: 170px;
+	pointer-events: none;
+	-webkit-box-align: end;
+	-webkit-align-items: flex-end;
+	align-items: flex-end;
+}
+
+.arrows div::after {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	margin: 20px 5px 0;
+	width: 100%;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 10px;
+	font-weight: 300;
+	font-size: 0.7em;
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.arrows a.prev div::after {
+	content: 'Previous';
+} 
+
+.arrows a.next div::after {
+	content: 'Next';
+	text-align: right;
+} 
+
+.arrows a.prev div {
+	left: 40px;
+}
+
+.arrows a.next div {
+	right: 40px;
+}
+
+.arrows div img {
+	margin: 0 5px;
+	opacity: 0;
+	box-shadow: 0 1px 0 #fff, 0 -1px 0 #fff;
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+	transition: transform 0.3s, opacity 0.3s;
+	-webkit-transform: scale(0.3);
+	transform: scale(0.3);
+}
+
+.arrows a.prev div img {
 	float: left;
 }
-.slide .image { 
-	margin:0 auto; 
-	display:block; 
+
+.arrows a.next div img {
+	float: right;
 }
-.slide .caption { 
-	font-size:14px; 
+
+.arrows a:hover {
+	width: 200px;
 }
-.author img { 
-	float:left; margin:0 -10em 0 -50px; 
+
+.arrows a:hover .icon-wrap::after {
+	width: 200px;
+	-webkit-transition-delay: 0s;
+	transition-delay: 0s;
 }
-.meta img.qr { 
-	width:100px; 
-	height:100px; 
+
+.arrows a:hover div {
+	pointer-events: auto;
 }
-.meta { 
-	float: left;
-	margin: 20px;
-	z-index:10; 
+
+.arrows a:hover div::after {
+	opacity: 1;
+	-webkit-transition-delay: 0.2s;
+	transition-delay: 0.2s;
+	-webkit-transform: translateY(0);
+	transform: translateY(0);
 }
-.meta cite { 
-	display:block; 
+
+.arrows a:hover img {
+	opacity: 1;
+	-webkit-transform: scale(1);
+	transform: scale(1);
 }
-.comments { 
-	margin-left:1em; 
+
+.arrows a:hover div img:first-child {
+	-webkit-transition-delay: 0.3s;
+	transition-delay: 0.3s;
 }
-.comment { 
-	display:block; 
-	clear:both; 
-	min-height:2.5em; 
-	padding:0 2em 1em; 
-	margin:0; 
+
+.arrows a:hover div img:nth-child(2) {
+	-webkit-transition-delay: 0.35s;
+	transition-delay: 0.35s;
+}
+
+.arrows a:hover div img:nth-child(3) {
+	-webkit-transition-delay: 0.4s;
+	transition-delay: 0.4s;
 }
