@@ -10,7 +10,7 @@ var port = 3000;
 var server;
 
 gulp.task('vendor', function() {
-    return gulp.src(['vendor/angular.min.js', 'vendor/angular-route.min.js', 'vendor/angular-resource.js'])
+    return gulp.src(['vendor/angular.min.js', 'vendor/angular-route.min.js', 'vendor/angular-resource.js','vendor/angular-animate.js'])
         .pipe(concat('angular-all.min.js'))
         .pipe(gulp.dest('public/js'))
         .pipe(notify({ message: 'Vendor task complete' }));
