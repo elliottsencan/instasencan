@@ -5,6 +5,7 @@
 		.module('instatest', [
 			'instatest.constants',
 			'instatest.routes',
+			'instatest.body',
 			'instatest.components'
 			]);
 

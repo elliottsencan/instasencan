@@ -11,7 +11,11 @@
 		function Slideshow ( instagramEndpoint ){
 			return {
 				restrict: 'E',
-				template: '<div>yo</div>'
+				require: '^ngModel',
+				scope: {
+					ngModel: '='
+				},
+				template: '<div>{{ngModel}}</div>'
 			}
 		}
 })();

@@ -10,7 +10,7 @@
 		function RouterConfig ($routeProvider, $locationProvider) {
 			$routeProvider
             .when('/tag/:tag', {
-                //controller: 'slideshow'
+                controller: 'bodyCtrl'
             })
             .otherwise({
                 redirectTo: '/'
