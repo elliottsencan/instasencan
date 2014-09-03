@@ -17,13 +17,13 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src('src/app.js')
-        .pipe(uglify({
-            compress: {
-                negate_iife: false
-            }
-        }))
-        .pipe(rename('app.min.js'))
+    return gulp.src('app/**/*.js', '!app/**/*-spec.js')
+        // .pipe(uglify({
+        //     compress: {
+        //         negate_iife: false
+        //     }
+        // }))
+        .pipe(concat('app.min.js'))
         .pipe(gulp.dest('public/js'))
         .pipe(notify({ message: 'Scripts task complete' }));
 });
@@ -53,7 +53,7 @@ var createServer = function(port) {
 };
 
 gulp.task('watch', function() {
-    gulp.watch('src/app.js', ['scripts']);
+    gulp.watch('app/**/*.js', ['scripts']);
 });
 
 gulp.task('server', function() {
