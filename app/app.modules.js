@@ -5,8 +5,7 @@
 		.module('instatest', [
 			'instatest.constants',
 			'instatest.routes',
-
-			//'instatest.components'
+			'instatest.components'
 			]);
 
 })();

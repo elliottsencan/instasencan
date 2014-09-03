@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('instatest.api')
+        .module('instatest.api', ['ngResource', 'instatest.constants'])
         .factory('instagramEndpoint', InstagramEndpoint);
 
-    InstagramEndpoint.$inject = ['$resource', 'instatest.constants'];
+    InstagramEndpoint.$inject = ['$resource', 'ACCESS_TOKEN'];
 
     function InstagramEndpoint($resource, ACCESS_TOKEN) {
         var service = {
