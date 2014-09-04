@@ -50,8 +50,12 @@
                 '</a>',
                 '</div>',
                 '</div>',
-                '<div class="info">',
-                '<p>{{currentImage}}</p>',
+                '<div text-fade="currentImage.created_time" class="info">',
+                '<div class="info-user">',
+                '<img ng-src="{{currentImage.user.profile_picture}}" />',
+                '<h5>{{ currentImage.user.full_name }}</h5>',
+                '<p>{{ currentImage.created_time | date:"medium" }}</p>',
+                //'<p>{{currentImage | json}}</p>',
                 '</div>',
                 '</div>'
             ].join(''),
@@ -71,7 +75,7 @@
                 }, delay);
             };
 
-            autoSlider();
+            //autoSlider();
 
             $scope.getImages = function(tag) {
                 var images = [];
@@ -83,6 +87,7 @@
                             $scope.images = data;
                             $scope.images[$scope.index].visible = true;
                             $scope.currentImage = $scope.images[$scope.index];
+                            console.log($scope.currentImage);
                         });
                     },
                     function error(error) {
@@ -118,7 +123,7 @@
                 });
 
                 $timeout.cancel(timer);
-                //autoSlider();
+                autoSlider();
 
             }
 
@@ -133,8 +138,8 @@
 
             scope.getImages(scope.ngModel);
 
-            scope.$watch('ngModel', function(newVal) {
-                if (newVal) {
+            scope.$watch('ngModel', function(newVal, oldVal) {
+                if (newVal && (newVal !== oldVal)) {
                     scope.getImages(scope.ngModel);
                 }
             });

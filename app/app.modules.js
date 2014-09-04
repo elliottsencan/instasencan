@@ -8,8 +8,7 @@
 			'instatest.routes',
 			'instatest.body',
 			'instatest.slideshow',
-			'instatest.animations',
-			'ngAnimate'
+			'instatest.animations'
 			]);
 
 })();

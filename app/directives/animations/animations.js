@@ -2,9 +2,9 @@
     'use strict';
 
     angular
-        .module('instatest.animations', [])
-    	.directive('imageloader', ImageOnload)
-    	.directive('textFade', TextFade);
+        .module('instatest.animations', ['ngAnimate'])
+        .directive('imageloader', ImageOnload)
+        .directive('textFade', TextFade);
 
     function ImageOnload() {
         return {
@@ -17,15 +17,22 @@
         };
     }
 
-    function TextFade(){
-    	return{
-    		restrict: 'A',
-    		link: function(scope, element, attrs){
-    			scope.$watch(attrs.uiFadeToggle, function(val, oldVal) {
-                if(val === oldVal){ return };
-                element[val ? 'fadeIn' : 'fadeOut'](1000);
-            });
-    		}
-    	}
+    TextFade.$inject = ['$animate'];
+
+    function TextFade($animate) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                console.log(element);
+                console.log(attrs.textFade)
+                scope.$watch(attrs.textFade, function(newVal, oldVal) {
+                    if (newVal !== oldVal) {
+                        $animate.addClass(element, 'fadeOut', function() {
+                            $animate.removeClass(element, 'fadeOut');
+                        });
+                    }
+                })
+            }
+        }
     }
 })();
