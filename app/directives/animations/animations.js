@@ -25,12 +25,7 @@
             link: function(scope, element, attrs) {
                 scope.$watch(attrs.textFade, function(newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        console.log('changed');
-                        console.log(element);
-                        console.log($animate);
                         $animate.addClass(element, 'fadeOut', function() {
-                            console.log(element);
-                            console.log('class was removed');
                             $animate.removeClass(element, 'fadeOut');
                         });
                     }

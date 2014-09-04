@@ -2,10 +2,8 @@
     'use strict';
 
     angular
-        .module('instatest.slideshow', ['instatest.api'])
-        .directive('slideshow', Slideshow)
-    ///move this out of here asap
-    .directive('imageloader', ImageOnload);
+        .module('instatest.slideshow', ['instatest.api', 'instatest.slideshow.components'])
+        .directive('slideshow', Slideshow);
 
     Slideshow.$inject = ['instagramEndpoint', '$timeout', '$rootScope'];
 
@@ -18,7 +16,7 @@
                 ngModel: '='
             },
             template: [
-                '<div ng-class="{loading: loading == true}" class="slider-container centered">',
+                '<div class="slider-container centered" ng-class="{loading: loading == true}" ng-mouseover="clearTimer()" ng-mouseleave="startTimer()">',
                 '<div class="loader">',
                 '<svg>',
                 '<path d="m 12.5,20 15,0 0,0 -15,0 z" class="led one"/>',
@@ -39,9 +37,6 @@
                 '</svg>',
                 '</span>',
                 '<div>',
-                // '<img ng-src="{{image.images.standard_resolution.url}}" alt="Thumb 1">',
-                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 2">',
-                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
                 '</div>',
                 '</a>',
                 '<a class="next" ng-click="updateIndex(+1)">',
@@ -51,20 +46,14 @@
                 '</svg>',
                 '</span>',
                 '<div>',
-                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 1">',
-                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 2">',
-                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
                 '</div>',
                 '</a>',
                 '</div>',
                 '</div>',
                 '<div text-fade="index" class="info" ng-animate=" \'animate\' ">',
-                '<div class="info-user">',
-                '<img ng-src="{{currentImage.user.profile_picture}}" />',
-                '<h5>{{ currentImage.user.full_name }}</h5>',
-                '<p>{{ currentImage.created_time | date:"medium" }}</p>',
-                //'<p>{{currentImage | json}}</p>',
-                '</div>',
+                '<user image="currentImage"></user>',
+                '<likes image="currentImage"></likes>',
+                '<comments image="currentImage"></comments>',
                 '</div>'
             ].join(''),
             controller: SlideshowController,
@@ -76,27 +65,37 @@
             var timer,
                 delay = 5000;
 
-            function autoSlider() {
+            $scope.startTimer = startTimer;
+            $scope.clearTimer = clearTimer;
+            $scope.getImages = getImages;
+            $scope.updateIndex = updateIndex;
+             $scope.$on('$destroy', function() {
+                clearTimer(); // when the scope is getting destroyed, cancel the timer
+            });
+
+
+            function startTimer() {
                 timer = $timeout(function() {
                     $scope.updateIndex(+1);
-                    timer = $timeout(autoSlider, delay);
+                    timer = $timeout(startTimer, delay);
                 }, delay);
             };
 
-            autoSlider();
+            function clearTimer() {
+                $timeout.cancel(timer);
+            }
 
-            $scope.getImages = function(tag) {
-            	$scope.loading = true;
-            	//$timeout.cancel(timer);
-                var images = [];
+            function getImages(tag) {
+                $scope.loading = true;
+                clearTimer();
                 //could be better, promise maybe?
                 instagramEndpoint.searchTag(tag,
                     function success(data) {
                         $rootScope.safeApply(function() {
-                        	console.log(data);
                             $scope.images = data;
                             $scope.currentImage = $scope.images[0];
                             $scope.loading = false;
+                            startTimer();
                         });
                     },
                     function error(error) {
@@ -105,8 +104,8 @@
                 )
             }
 
+            function updateIndex(offset) {
 
-            $scope.updateIndex = function(offset) {
 
                 if (!!isNaN(parseFloat(offset))) {
                     return false;
@@ -127,15 +126,10 @@
 
                 $timeout(function() {
                     $scope.currentImage = $scope.images[$scope.index];
-                }, 150);
+                }, 250);
 
-                $timeout.cancel(timer);
 
-            }
-
-            $scope.$on('$destroy', function() {
-                $timeout.cancel(timer); // when the scope is getting destroyed, cancel the timer
-            });
+            }           
         }
 
         function SlideshowLink(scope, iElement, iAttrs, ngModelController) {
@@ -152,16 +146,5 @@
             });
         }
 
-    }
-
-    function ImageOnload() {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attrs) {
-                element.bind('load', function() {
-                    element[0].classList.add('visible');
-                });
-            }
-        };
     }
 })();
