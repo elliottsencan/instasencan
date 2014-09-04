@@ -18,10 +18,18 @@
                 ngModel: '='
             },
             template: [
-                '<div class="slider-container centered">',
+                '<div ng-class="{loading: loading == true}" class="slider-container centered">',
+                '<div class="loader">',
+                '<svg>',
+                '<path d="m 12.5,20 15,0 0,0 -15,0 z" class="led one"/>',
+                '<path d="m 32.5,20 15,0 0,0 -15,0 z" class="led two"/>',
+                '<path d="m 52.5,20 15,0 0,0 -15,0 z" class="led three"/>',
+                '<path d="m 72.5,20 15,0 0,0 -15,0 z" class="led four"/>',
+                '</svg>',
+                '</div>',
                 '<div class="slider">',
-                '<div class="slide" ng-repeat="image in images" ng-show="image.visible">',
-                '<img imageloader ng-src="{{image.images.standard_resolution.url}}" />',
+                '<div class="slide">',
+                '<img text-fade="index" ng-animate="\'animate\'" imageloader ng-src="{{currentImage.images.standard_resolution.url}}" />',
                 '</div>',
                 '<div class="arrows">',
                 '<a class="prev" ng-click="updateIndex(-1)">',
@@ -31,9 +39,9 @@
                 '</svg>',
                 '</span>',
                 '<div>',
-                '<img ng-src="{{image.images.standard_resolution.url}}" alt="Thumb 1">',
-                '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 2">',
-                '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
+                // '<img ng-src="{{image.images.standard_resolution.url}}" alt="Thumb 1">',
+                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 2">',
+                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
                 '</div>',
                 '</a>',
                 '<a class="next" ng-click="updateIndex(+1)">',
@@ -43,14 +51,14 @@
                 '</svg>',
                 '</span>',
                 '<div>',
-                '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 1">',
-                '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 2">',
-                '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
+                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 1">',
+                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 2">',
+                // '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
                 '</div>',
                 '</a>',
                 '</div>',
                 '</div>',
-                '<div text-fade="currentImage.created_time" class="info">',
+                '<div text-fade="index" class="info" ng-animate=" \'animate\' ">',
                 '<div class="info-user">',
                 '<img ng-src="{{currentImage.user.profile_picture}}" />',
                 '<h5>{{ currentImage.user.full_name }}</h5>',
@@ -75,19 +83,20 @@
                 }, delay);
             };
 
-            //autoSlider();
+            autoSlider();
 
             $scope.getImages = function(tag) {
+            	$scope.loading = true;
+            	//$timeout.cancel(timer);
                 var images = [];
                 //could be better, promise maybe?
                 instagramEndpoint.searchTag(tag,
                     function success(data) {
-                        console.log(data);
                         $rootScope.safeApply(function() {
+                        	console.log(data);
                             $scope.images = data;
-                            $scope.images[$scope.index].visible = true;
-                            $scope.currentImage = $scope.images[$scope.index];
-                            console.log($scope.currentImage);
+                            $scope.currentImage = $scope.images[0];
+                            $scope.loading = false;
                         });
                     },
                     function error(error) {
@@ -110,20 +119,17 @@
                     newIndex = $scope.images.length - 1;
                 }
 
-                if (newIndex === $scope.images.length){
-                	newIndex = 0;
+                if (newIndex === $scope.images.length) {
+                    newIndex = 0;
                 }
 
                 $scope.index = newIndex;
 
-                $rootScope.safeApply(function() {
-                    $scope.images[oldIndex].visible = false;
-                    $scope.images[newIndex].visible = true;
+                $timeout(function() {
                     $scope.currentImage = $scope.images[$scope.index];
-                });
+                }, 150);
 
                 $timeout.cancel(timer);
-                autoSlider();
 
             }
 
@@ -135,6 +141,7 @@
         function SlideshowLink(scope, iElement, iAttrs, ngModelController) {
 
             scope.index = 0;
+            scope.loading = true;
 
             scope.getImages(scope.ngModel);
 
