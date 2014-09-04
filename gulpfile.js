@@ -6,6 +6,7 @@ var notify = require('gulp-notify');
 var debug = require('gulp-debug');
 var path = require('path');
 var express = require("express");
+var karma = require('karma').server;
 var port = 3000;
 var server;
 
@@ -26,6 +27,19 @@ gulp.task('scripts', function() {
         .pipe(concat('app.min.js'))
         .pipe(gulp.dest('public/js'))
         .pipe(notify({ message: 'Scripts task complete' }));
+});
+
+gulp.task('test', function (done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done);
+});
+
+gulp.task('tdd', function (done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js'
+  }, done);
 });
 
 var createServer = function(port) {
@@ -53,7 +67,7 @@ var createServer = function(port) {
 };
 
 gulp.task('watch', function() {
-    gulp.watch('app/**/*.js', ['scripts']);
+    gulp.watch('app/**/*.js', ['tests', 'scripts']);
 });
 
 gulp.task('server', function() {
