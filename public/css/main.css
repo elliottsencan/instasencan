@@ -51,13 +51,18 @@ div#header input {
 	-webkit-transition: all 0.5s; 
 }
 
+.svg-container{
+	display:none;
+}
+
 
 /** slider **/
 
 .arrows{
-	position: absolute;
-	top: 50%;
-	width:100%;
+position: absolute;
+top: 50%;
+left: -100px;
+right: -100px;
 }
 
 .arrows .next{
@@ -76,7 +81,20 @@ div#header input {
   transform: translate(-50%, -50%);
 }
 
+.slider-container{
+	width:940px;
+	height:640px;
+}
+
+.info{
+	float:left;
+	width:300px;
+	height:640px;
+	background:#fff;
+}
+
 .slider{
+	float:left;
 	width:640px;
 	height:640px;
 }
@@ -85,19 +103,27 @@ div#header input {
 	opacity:0;
 	width:640px;
 	height:640px;
-	transition: opacity 750ms ease;
-	-webkit-transition: opacity 750ms ease;
-	-moz-transition: opacity 750ms ease;
-	-o-transition: opacity 750ms ease;
-	-ms-transition: opacity 750ms ease;
 	position:absolute;
 	top:0;
 	left:0;
 	box-shadow:0 0 20px rgba(0,0,0,.3);
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: url(#greyscale);
+	filter: gray;
+	transition: opacity 250ms ease;
+	-webkit-transition: opacity 250ms ease;
+	-webkit-transition : -webkit-filter 3000ms ease;
+	-moz-transition: opacity 250ms ease;
+	-o-transition: opacity 250ms ease;
+	-ms-transition: opacity 250ms ease;
 }
 
 .slide img.visible{
 	opacity:1;
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+	filter: none;
 }
 
 
@@ -186,7 +212,7 @@ div#header input {
 }
 
 .arrows a.prev div::after {
-	content: 'Previous';
+	content: 'Prev';
 } 
 
 .arrows a.next div::after {
@@ -195,11 +221,11 @@ div#header input {
 } 
 
 .arrows a.prev div {
-	left: 40px;
+	left: 0px;
 }
 
 .arrows a.next div {
-	right: 40px;
+	right: 0px;
 }
 
 .arrows div img {
