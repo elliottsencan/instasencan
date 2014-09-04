@@ -16,15 +16,9 @@
                 ngModel: '='
             },
             template: [
-                '<div class="slider-container centered" ng-class="{loading: loading == true}" ng-mouseover="clearTimer()" ng-mouseleave="startTimer()">',
-                '<div class="loader">',
-                '<svg>',
-                '<path d="m 12.5,20 15,0 0,0 -15,0 z" class="led one"/>',
-                '<path d="m 32.5,20 15,0 0,0 -15,0 z" class="led two"/>',
-                '<path d="m 52.5,20 15,0 0,0 -15,0 z" class="led three"/>',
-                '<path d="m 72.5,20 15,0 0,0 -15,0 z" class="led four"/>',
-                '</svg>',
-                '</div>',
+                '<div class="slider-container centered" ng-class="{loading: loading === true, error: error === true}" ng-mouseover="clearTimer()" ng-mouseleave="startTimer()">',
+              	'<loader></loader>',
+              	'<error error="errorMessage"></error>',
                 '<div class="slider">',
                 '<div class="slide">',
                 '<img text-fade="index" ng-animate="\'animate\'" imageloader ng-src="{{currentImage.images.standard_resolution.url}}" />',
@@ -95,11 +89,14 @@
                             $scope.images = data;
                             $scope.currentImage = $scope.images[0];
                             $scope.loading = false;
+                            $scope.error = false;
                             startTimer();
                         });
                     },
                     function error(error) {
-                        console.log(error);
+                    	console.log('error');
+                        $scope.error = true;
+                        $scope.errorMessage = error;
                     }
                 )
             }
@@ -136,6 +133,7 @@
 
             scope.index = 0;
             scope.loading = true;
+            scope.error;
 
             scope.getImages(scope.ngModel);
 
