@@ -2,11 +2,10 @@
     'use strict';
 
     angular
-        .module('instatest.components', ['instatest.api'])
+        .module('instatest.slideshow', ['instatest.api'])
         .directive('slideshow', Slideshow)
     ///move this out of here asap
     .directive('imageloader', ImageOnload);
-    //.directive('img', Img);
 
     Slideshow.$inject = ['instagramEndpoint', '$timeout', '$rootScope'];
 
@@ -19,7 +18,8 @@
                 ngModel: '='
             },
             template: [
-                '<div class="slider centered">',
+                '<div class="slider-container centered">',
+                '<div class="slider">',
                 '<div class="slide" ng-repeat="image in images" ng-show="image.visible">',
                 '<img imageloader ng-src="{{image.images.standard_resolution.url}}" />',
                 '</div>',
@@ -48,6 +48,10 @@
                 '<img ng-src="{{image.images.thumbnail.url}}" alt="Thumb 3">',
                 '</div>',
                 '</a>',
+                '</div>',
+                '</div>',
+                '<div class="info">',
+                '<p>{{currentImage}}</p>',
                 '</div>',
                 '</div>'
             ].join(''),
@@ -78,6 +82,7 @@
                         $rootScope.safeApply(function() {
                             $scope.images = data;
                             $scope.images[$scope.index].visible = true;
+                            $scope.currentImage = $scope.images[$scope.index];
                         });
                     },
                     function error(error) {
@@ -104,12 +109,14 @@
                 	newIndex = 0;
                 }
 
+                $scope.index = newIndex;
+
                 $rootScope.safeApply(function() {
                     $scope.images[oldIndex].visible = false;
                     $scope.images[newIndex].visible = true;
+                    $scope.currentImage = $scope.images[$scope.index];
                 });
 
-                $scope.index = newIndex;
                 $timeout.cancel(timer);
                 //autoSlider();
 
@@ -144,14 +151,5 @@
                 });
             }
         };
-    }
-
-    function Img(){
-    	return {
-    		restrict: 'E',
-    		compile: function( element, attributes, transclude){
-    			element.prepend("<img class='imgFader' />")
-    		}
-    	}
     }
 })();

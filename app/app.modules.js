@@ -7,7 +7,8 @@
 			'instatest.config',
 			'instatest.routes',
 			'instatest.body',
-			'instatest.components',
+			'instatest.slideshow',
+			'instatest.animations',
 			'ngAnimate'
 			]);
 
