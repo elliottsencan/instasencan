@@ -12,7 +12,5 @@
 
 			vm.tag = 'servicenow';
 
-			console.log(vm);
-
 		}
 })();
