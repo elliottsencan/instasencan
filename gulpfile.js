@@ -67,7 +67,7 @@ var createServer = function(port) {
 };
 
 gulp.task('watch', function() {
-    gulp.watch('app/**/*.js', ['tests', 'scripts']);
+    gulp.watch('app/**/*.js', ['scripts']);
 });
 
 gulp.task('server', function() {
