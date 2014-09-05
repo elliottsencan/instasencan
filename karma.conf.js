@@ -6,7 +6,7 @@ module.exports = function(config) {
             'vendor/angular.min.js',
             'vendor/angular-mocks.js',
             'app/**/*.js',
-            'app/**/*-spec.js'
+            'test/*.js'
         ]
     });
 };

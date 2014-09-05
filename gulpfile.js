@@ -18,7 +18,7 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src('app/**/*.js', '!app/**/*-spec.js')
+    return gulp.src('app/**/*.js')
         // .pipe(uglify({
         //     compress: {
         //         negate_iife: false
