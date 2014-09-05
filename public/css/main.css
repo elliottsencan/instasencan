@@ -104,15 +104,17 @@ right: -100px;
         transition: opacity 350ms; /* custom */
 }
 
-.slider-container .loader{
+
+
+.slider-container .loader, .slider-container .error{
 	opacity:0;
 }
 
-.slider-container.loading{
+.slider-container.loading, .slider-container.error{
 	opacity:.75;
 }
 
-.slider-container.loading .loader{
+.slider-container.loading .loader, .slider-container.error .error{
 	width:100%;
 	height:100%;
 	background:#fff;
@@ -131,6 +133,26 @@ right: -100px;
   		width:6.250em;
   		height:3.125em;
   		margin:-1.562em 0 0 -3.125em;
+  	}
+
+  	.error > svg{
+  		position:absolute;
+  		fill:red;
+  		top:35%;
+  		left:50%;
+  		width:6.250em;
+  		height:3.125em;
+  		margin:-1.562em 0 0 -3.125em;
+  	}
+
+  	.error .error-message{
+		position:absolute;
+		left:0%;
+		top:45%;
+		bottom:0;
+		right:0;
+		text-align:center;
+		margin: 0 -30%;
   	}
 
 	.led{
@@ -200,9 +222,14 @@ right: -100px;
 }
 
 .info-user p{
+	font-size:12px;
 	margin-left:108px;
 }
 
+.info-user p.caption{
+	font-size:14px;
+
+}
 
 /** info likes **/
 
