@@ -23,7 +23,8 @@
     "karma-firefox-launcher": "*",
     "karma-jasmine": "*",
     "karma-safari-launcher": "*",
-    "gulp-jasmine": "~1.0.0"
+    "gulp-jasmine": "~1.0.0",
+    "karma-spec-reporter": "0.0.13"
   },
   "scripts": {
     "build": "gulp",
