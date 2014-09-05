@@ -55,8 +55,6 @@
         }
 
         function SlideshowController($scope) {
-        	
-        	console.log($scope)
 
             var timer,
                 delay = 5000;

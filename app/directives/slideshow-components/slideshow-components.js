@@ -12,7 +12,6 @@
     function User() {
         return {
             restrict: 'E',
-            replace: true,
             scope: {
                 image: '='
             },
@@ -20,8 +19,8 @@
                 '<div class="info-user">',
                 '<img ng-src="{{image.user.profile_picture}}" />',
                 '<h5>{{ image.user.full_name }}</h5>',
-                '<p>{{ image.created_time | date:"medium" }}</p>',
-                '<p class="caption">{{ image.caption.text | date:"medium" }}</p>',
+                '<p class="time">{{ image.created_time | date:"medium" }}</p>',
+                '<p class="caption">{{ image.caption.text }}</p>',
                 '</div>'
             ].join('')
         };
@@ -30,7 +29,6 @@
     function Likes() {
         return {
             restrict: 'E',
-            replace: true,
             scope: {
                 image: '='
             },
@@ -46,7 +44,6 @@
     function Comments() {
         return {
             restrict: 'E',
-            replace: true,
             scope: {
                 image: '='
             },
@@ -67,7 +64,6 @@
     function Loader() {
         return {
             restrict: 'E',
-            replace: true,
             template: [
                 '<div class="loader">',
                 '<svg>',
@@ -84,8 +80,7 @@
     function Error() {
         return {
             restrict: 'E',
-            replace: true,
-            scope:{
+            scope: {
                 error: '='
             },
             template: [
