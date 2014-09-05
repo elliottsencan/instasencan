@@ -5,7 +5,7 @@ body {
 	padding:0; 
 	height:100%; 
 	width:100%; 
-	background: #2D5D8A
+	background: #edeeef url(//d36xtkk24g8jdx.cloudfront.net/bluebar/47dfbd4/images/shared/noise-2.png);
 }
 ul, li { 
 	margin:0; 
@@ -18,34 +18,54 @@ cite {
 	font-weight:bold; 
 }
 div#header { 
-	text-align:left;
-	font: bold 18px sans-serif;  
-	margin:0; 
-	padding:20px 30px 40px 50px; 
-	width:100%; 
-	color:#000; 
+text-align: left;
+font: bold 18px sans-serif;
+margin: 0;
+padding: 10px 0;
+width: 100%;
+color: #000;
+background: #2D5D8A;
+box-shadow: 0 2px 4px rgba(0,0,0,.6);
+border-bottom: black 1px solid;
 }
 
 div#header .container{
-	max-width:1080px;
+	max-width:1040px;
 	margin:10px auto;
 	display:block;
 }
 
-div#header input {  
-	margin:0; 
-	float:right;
-	padding:0; 
-	border-radius:0.1em; 
+div#header div.input-container {  
+margin: 0;
+float: right;
+padding: 8px 0;
+border-radius: 0.1em;
+color: white;
+position:relative;
 }
-div#header input::before {  
-	content: 'Search by Tags';
-	display:block;
-	color:white;
+
+div#header div.input-container:after {  
+content: 'Press Enter';
+position: absolute;
+color: black;
+bottom: 14px;
+right: -120px;
+background: white;
+opacity: 0;
+transition: opacity 350ms;
+-webkit-transition: opacity 350ms;
+-moz-transition: opacity 350ms;
+-o-transition: opacity 350ms;
+transition: opacity 350ms;
+padding: 5px;
+border-radius: 3px;
 }
-div#header:hover input { 
-	background:rgba(0,0,0,0.1); 
+
+
+div#header div.input-container.enterActive:after {  
+	opacity:1;
 }
+
 div#header img { 
 	vertical-align: middle; 
 }
@@ -53,11 +73,14 @@ img {
 	border-radius:0.2em; 
 }
 div#header input { 
-	color:inherit; 
+	color:black; 
 	font:inherit; 
-	border:none; 
-	background:transparent; 
+	border:1px solid #dbdbdb; 
+	background:#white; 
+	border-radius:3px;
 	outline:none; 
+	padding:10px;
+	margin-left:10px;
 }
 
 
@@ -227,7 +250,11 @@ right: -100px;
 }
 
 .info-user p.caption{
-	font-size:14px;
+	font-size: 14px;
+	word-wrap: break-word;
+	max-height: 66px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 
 }
 
@@ -261,6 +288,14 @@ overflow-y: auto;
 
 .info-comments .comment{
 	border-bottom:1px solid #dbdbdb;
+}
+
+.qr{
+	position:absolute;
+	bottom:0;
+	right:0;
+	width:80px;
+	height:80px;
 }
 
 .slider{
@@ -329,6 +364,19 @@ overflow-y: auto;
 /*--------------------*/
 .color-9 { background-color: #e65b61; }
 
+.arrows{
+	opacity:1;
+		transition: opacity 350ms;
+	-webkit-transition: opacity 350ms;
+	-moz-transition: opacity 350ms;
+	-o-transition: opacity 350ms;
+	-ms-transition: opacity 350ms;
+}
+
+.error .arrows, .loading .arrows{
+	opacity:0;
+}
+
 .arrows a {
 	width: 60px;
 	height: 100px;
@@ -353,7 +401,7 @@ overflow-y: auto;
 	top: 50%;
 	width: 20px;
 	height: 1px;
-	background: #fff;
+	background: #000;
 	content: '';
 	-webkit-transition: width 0.3s 0.2s;
 	transition: width 0.3s 0.2s;
@@ -372,7 +420,7 @@ overflow-y: auto;
 }
 
 .arrows svg.icon {
-	fill: #fff;
+	fill: #000;
 }
 
 .arrows div {
@@ -396,7 +444,7 @@ overflow-y: auto;
 	left: 0;
 	margin: 20px 5px 0;
 	width: 100%;
-	color: #fff;
+	color: #000;
 	text-transform: uppercase;
 	letter-spacing: 10px;
 	font-weight: 300;
@@ -445,10 +493,11 @@ overflow-y: auto;
 
 .arrows a:hover {
 	width: 200px;
+	cursor:pointer;
 }
 
 .arrows a:hover .icon-wrap::after {
-	width: 200px;
+	width: 75px;
 	-webkit-transition-delay: 0s;
 	transition-delay: 0s;
 }

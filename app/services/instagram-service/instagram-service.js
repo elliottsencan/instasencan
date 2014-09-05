@@ -26,7 +26,6 @@
             });
 
             api.fetch(function(response) {
-                console.log(response);
                 callback(response.data);
             });
 

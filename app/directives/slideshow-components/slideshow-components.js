@@ -7,6 +7,7 @@
         .directive('likes', Likes)
         .directive('loader', Loader)
         .directive('error', Error)
+        .directive('ngEnter', NgEnter)
         .directive('comments', Comments);
 
     function User() {
@@ -57,6 +58,7 @@
                 '<p>{{ comment.text }}</p>',
                 '</li>',
                 '</ul>',
+                '<img class="qr" ng-src="http://datamatrix.kaywa.com/img.php?s=8&d={{ image.link }}" />',
             ].join('')
         };
     }
@@ -74,6 +76,20 @@
                 '</svg>',
                 '</div>',
             ].join('')
+        };
+    }
+
+    function NgEnter() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if (event.which === 13) {
+                    scope.$apply(function() {
+                        scope.$eval(attrs.ngEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
         };
     }
 

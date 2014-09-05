@@ -11,14 +11,13 @@
         return {
             restrict: 'E',
             require: '^ngModel',
-            replace: true,
             scope: {
                 ngModel: '='
             },
             template: [
                 '<div class="slider-container centered" ng-class="{loading: loading === true, error: error === true}" ng-mouseover="clearTimer()" ng-mouseleave="startTimer()">',
-              	'<loader></loader>',
-              	'<error error="errorMessage"></error>',
+                '<loader></loader>',
+                '<error error="errorMessage"></error>',
                 '<div class="slider">',
                 '<div class="slide">',
                 '<img text-fade="index" ng-animate="\'animate\'" imageloader ng-src="{{currentImage.images.standard_resolution.url}}" />',
@@ -63,7 +62,7 @@
             $scope.clearTimer = clearTimer;
             $scope.getImages = getImages;
             $scope.updateIndex = updateIndex;
-             $scope.$on('$destroy', function() {
+            $scope.$on('$destroy', function() {
                 clearTimer(); // when the scope is getting destroyed, cancel the timer
             });
 
@@ -87,10 +86,15 @@
                     function success(data) {
                         $rootScope.safeApply(function() {
                             $scope.images = data;
-                            $scope.currentImage = $scope.images[0];
-                            $scope.loading = false;
-                            $scope.error = false;
-                            startTimer();
+                            if ($scope.images.length === 0) {
+                                $scope.loading = false;
+                                $scope.error = true;
+                            } else {
+                                $scope.currentImage = $scope.images[0];
+                                $scope.loading = false;
+                                $scope.error = false;
+                                startTimer();
+                            }
                         });
                     },
                     function error(error) {
@@ -125,7 +129,7 @@
                 }, 250);
 
 
-            }           
+            }
         }
 
         function SlideshowLink(scope, iElement, iAttrs, ngModelController) {
