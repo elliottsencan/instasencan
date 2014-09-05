@@ -21,6 +21,7 @@
                 '<img ng-src="{{image.user.profile_picture}}" />',
                 '<h5>{{ image.user.full_name }}</h5>',
                 '<p>{{ image.created_time | date:"medium" }}</p>',
+                '<p class="caption">{{ image.caption.text | date:"medium" }}</p>',
                 '</div>'
             ].join('')
         };

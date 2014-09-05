@@ -55,6 +55,8 @@
         }
 
         function SlideshowController($scope) {
+        	
+        	console.log($scope)
 
             var timer,
                 delay = 5000;
@@ -94,7 +96,6 @@
                         });
                     },
                     function error(error) {
-                    	console.log('error');
                         $scope.error = true;
                         $scope.errorMessage = error;
                     }
