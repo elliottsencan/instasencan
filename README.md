@@ -1,6 +1,4 @@
-# Instatest-Sencan
-This is the rewrite of Instatest by Elliott Sencan
-
+# InstaSencan
 
 ## Setup
 1. Clone the instatest repository. 
@@ -8,9 +6,6 @@ This is the rewrite of Instatest by Elliott Sencan
 3. Make sure you have Node and npm installed, then run ``npm install``.  
 4. Run ``gulp``.
 4. Open your favorite browser and navigate to [http://localhost.com:3000](http://localhost.com:3000).
-
-## Outline
-After looking at the code here, I decided that there was enough wrong with it to warrant rewriting it completely. I didnt think a new git branch was necessary as I could change our gulp config to watch the new files I was working with, and effectively rebuild the application within the same repo. 
 
 ## Style guide
 This angular app follows [John Papa Angularjs Style guide][1]. This is mainly for readability sake, but many reasons for the choices I made here are outlined in detail in this document.
